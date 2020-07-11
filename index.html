@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>JdbcTemplate Generator</title>
+  <script src="/js/common.min.js"></script>
+  <script src="/js/ClassInfo.min.js"></script>
+  <script src="/js/template.js"></script>
+  <script src="/js/generator.min.js"></script>
+</head>
+
+<body>
+  <div id="example"></div>
+  <script>
+    var tableSql = "CREATE TABLE    'user_info' (\n  'user_id' int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',  'username'     varchar(255) NOT NULL COMMENT '用户名',\n  'addtime' datetime NOT NULL COMMENT '创建时间',\n  PRIMARY KEY ('user_id')\n) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息''";
+
+    authorInfo = {
+      "name": "fen3",
+      "email": "fen3@example",
+      "packageBasename": "com.example.rest"
+    }
+    var classInfo = GetClassInfo(tableSql, authorInfo);
+    console.log(getRepositoryClass(classInfo));
+    console.log(genEntity(classInfo));
+  </script>
+</body>
+
+</html>
