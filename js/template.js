@@ -59,7 +59,7 @@ const isexistTemplate = "\
     }\n\
 "
 
-const classTemplate = "package  net.fenv.rest.entity;\n\
+const classTemplate = "package  @@packageBasename@@.entity;\n\
     \n\
 import java.io.Serializable;\n\
 import lombok.Data;\n\
