@@ -68,7 +68,7 @@ import lombok.NoArgsConstructor;@@importdate@@\n\
 /**\n\
 *  @@classComment@@\n\
 *  表名 @@tableName@@\n\
-*  @author @@autho@@ @@createdate@@\n\
+*  @author @@author@@ @@createdate@@\n\
 */\n\
 \n\
 @Data\n\
