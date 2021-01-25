@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>JdbcTemplate Generator</title>
+  <script src="js/jdbc.js"></script>
+ <link rel="stylesheet" href="css/base.min.css">
+</head>
+
+<body>
+  <div id="authorInfo">
+    <label>作者
+      <input id="name" type="text" value="wells" /></label>
+    <label>邮箱
+      <input id="email" type="text" value="wells@example.com" /></label>
+    <label>包名
+      <input id="packageBasename" type="text" value="net.fenv.gen" /></label>
+      <label>包名
+        <input id="jdbcName" type="text" value="jdbcTemplateNamed" /></label>
+    <button id="btGen"">生成</button>
+  </div>
+  <div id="main" style="width:100%;">
+    <div id="sqlpanel">
+      <h3>SQL</h3>
+      <textarea id="sql">CREATE TABLE `data_confirm_log` (
+        `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+        `project_id` BIGINT(20) NOT NULL COMMENT '项目id',
+        `username` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '用户id' COLLATE 'utf8_general_ci',
+        `nickname` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '确认人姓名' COLLATE 'utf8_general_ci',
+        `result` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '结果' COLLATE 'utf8_general_ci',
+        `remarks` VARCHAR(200) NOT NULL DEFAULT '' COMMENT '备注' COLLATE 'utf8_general_ci',
+        `create_time` TIMESTAMP NOT NULL DEFAULT current_timestamp() COMMENT '添加时间',
+        `end_time` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '核对结束时间',
+        `update_time` TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新时间',
+        `project_name` VARCHAR(250) NOT NULL COMMENT '项目名称' COLLATE 'utf8_general_ci',
+        `reply` VARCHAR(250) NULL DEFAULT NULL COMMENT '答复内容' COLLATE 'utf8_general_ci',
+        `reply_time` TIMESTAMP NULL DEFAULT NULL COMMENT '答复时间',
+        PRIMARY KEY (`id`) USING BTREE
+      )
+      COLLATE='utf8_general_ci'
+      ENGINE=InnoDB
+      AUTO_INCREMENT=41
+      ;
+    </textarea>
+    </div>
+    <div>
+      <h3>Entity</h3>
+      <textarea id="entity"></textarea>
+    </div>
+    <div>
+      <h3>Reposity</h3>
+      <textarea id="reposity"></textarea>
+    </div>
+  </div>
+  <script>
+
+    function genCode() {
+      let basicInfo = {
+          author: document.getElementById("name").value,
+          mail: document.getElementById("email").value,
+          packageBasename: document.getElementById("packageBasename").value,
+          jdbcName: document.getElementById("jdbcName").value
+      }
+      var tableSql = document.getElementById("sql").value;
+      var classInfo = genJDBC(tableSql, basicInfo);
+      document.getElementById("entity").value = classInfo.entity;
+      document.getElementById("reposity").value = classInfo.repository;
+      console.log(getRepositoryClass(classInfo));
+      console.log(genEntity(classInfo));
+
+    }
+    // in case the document is already rendered
+    function run() {
+      var btgen = document.getElementById("btGen");
+      btgen.addEventListener("click", genCode);
+    }
+    if (document.readyState != 'loading') run();
+    // modern browsers
+    else if (document.addEventListener) document.addEventListener('DOMContentLoaded', run);
+    // IE <= 8
+    else document.attachEvent('onreadystatechange', function() {
+      if (document.readyState == 'complete') run();
+    });
+  </script>
+</body>
+
+</html>
